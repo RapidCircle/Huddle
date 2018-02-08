@@ -36,7 +36,7 @@
 * [Create App Registration for the MS Graph Connector](#create-app-registration-for-the-ms-graph-connector)
 * [Add keyCredential to App Registrations](#add-keycredential-to-app-registrations)
 
-[Register app for Bot Registration](#register-app-for-bot-registration)
+[Register Microsoft App for Bot Registration](#register-microsoft-app-for-bot-registration)
 
 [Deploy Azure Components with ARM Template](#deploy-azure-components-with-arm-template)
 
@@ -106,8 +106,8 @@ In this section, we will connect to Microsoft Teams in PowerShell with a Huddle 
    >   * Public: public teams are visible to everyone from the teams gallery and you can join them without getting approval from the team owner.
    > * Owners and Members:
    >   * Please use UPN (User Principle Name) instead of email.
-   >   * Use ";" to separate multi users. 
-   >   * The Huddle work account used to connect to Microsoft Teams will be added as owner of each team automatically, no matter it is in the owners column or not.
+   >   * Use ";" to separate multi-users. 
+   >   * The Huddle work account used to connect to Microsoft Teams will be added as the owner of each team automatically, no matter it is in the owners column or not.
 
 2. Run PowerShell as Administrator, and execute the commands below to install required modules:
 
@@ -337,7 +337,7 @@ The keyCredential is in the generated file, and will be used to create App Regis
 
 ### Export the Certificate and Convert to Base64 String
 
-The following commands will export the certificate and convert it to base64 string.
+The following commands will export the certificate and convert it to a base64 string.
 
 ~~~powershell
 $password = Read-Host -Prompt "Enter password" -AsSecureString
@@ -375,7 +375,7 @@ The **Directory ID** will be used as the value of  **Tenant Id** parameter of th
 
       | API                                      | Permission Type | Permissions                              |
       | ---------------------------------------- | --------------- | ---------------------------------------- |
-      | Office 365 SharePoint Online<br />(Microsoft.SharePoint) | Application     | Read and write items and lists in all site  collections |
+      | Office 365 SharePoint Online<br />(Microsoft.SharePoint) | Application     | Read and write items and lists in all site collections |
       | Microsoft  Graph                         | Delegated       | Read and write all groups<br />Read all users' full profiles |
 
 2. Copy aside the **Application Id**. It will be used as the values of **Bot Client Id** parameter of the ARM Template.
@@ -439,7 +439,7 @@ Follow the steps below to add keyCredential to App Registrations of the Bot Web 
 3. Insert the keyCredential into the square brackets of the **keyCredentials** node.
 4. Click **Save**.
 
-## Register app for Bot Registration
+## Register Microsoft App for Bot Registration
 
 1. Open [https://apps.dev.microsoft.com/portal/register-app](https://apps.dev.microsoft.com/portal/register-app) in a browser, then sign in with the Huddle work account.
 
@@ -710,7 +710,7 @@ Another way to start 1:1 talk is using the **MicrosoftAppId** of the Bot:
 
 2. Replace the following 2 placeholders with the corresponding values you got in previous guides:
 
-   * `<MicrosoftAppId>`: the App Id of the Microsoft App registered when creating the Bot
+   * `<MicrosoftAppId>`: the Application Id of the Microsoft App registered for Bot Registration.
 
      ![](Images/ms-teams-01.png)
 
@@ -730,11 +730,11 @@ Another way to start 1:1 talk is using the **MicrosoftAppId** of the Bot:
 
    ![](Images/ms-teams-04.png)
 
-6. Click the **Bots** tab.
+6. Click the **Apps** tab.
 
    ![](Images/ms-teams-05.png)
 
-7. Then click **Sideload a bot or tab**.
+7. Then click **Upload a custom app**.
 8. Select the *HuddleTeamsApp.zip*.
 
 ### Add Metric Input Tab
@@ -786,5 +786,7 @@ Another way to start 1:1 talk is using the **MicrosoftAppId** of the Bot:
    Input: IdeaBoard
 
 7. Click **Save**. 
+
+
 
 **Copyright (c) 2018 Microsoft. All rights reserved.**

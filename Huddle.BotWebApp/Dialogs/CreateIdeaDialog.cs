@@ -1,4 +1,9 @@
-﻿using Huddle.BotWebApp.Models;
+﻿/*   
+ *   * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.  
+ *   * See LICENSE in the project root for license information.  
+ */
+
+using Huddle.BotWebApp.Models;
 using Huddle.BotWebApp.Services;
 using Huddle.BotWebApp.SharePoint;
 using Huddle.BotWebApp.Utils;
@@ -6,7 +11,6 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Microsoft.Graph;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -99,7 +103,6 @@ namespace Huddle.BotWebApp.Dialogs
         {
             idea.Owners = new[] { await result };
 
-            //await context.SayAsync("Almost done. What date will you start to implement this? (Date format: mm/dd/yyyy)");
             await context.ChoiceAsync(
                 "Almost done. What date will you start to implement this? <br /> (Click one of the dates below, or input one with format mm/dd/yyyy)",
                 new[] { "Today", "Tomorrow" });
@@ -184,7 +187,7 @@ namespace Huddle.BotWebApp.Dialogs
             var plan = await planService.GetTeamPlanAsync(Team);
             if (plan == null) throw new ApplicationException($"Could not found plan named '{Team.DisplayName}'");
 
-            var plannerTask = await ideaService.CreateAsync(plan.Id, idea.Title, idea.StartDate, idea.Owners.Select(i=>i.Id).FirstOrDefault(), idea.Description);
+            var plannerTask = await ideaService.CreateAsync(plan.Id, idea.Title, idea.StartDate, idea.Owners.Select(i => i.Id).FirstOrDefault(), idea.Description);
             var plannerTaskUrl = ideaService.GetIdeaUrl(Team.Id, plan.Id, plannerTask.Id);
 
             try
@@ -193,22 +196,12 @@ namespace Huddle.BotWebApp.Dialogs
                 var metricsService = new MetricsService(clientContext);
                 await metricsService.CreateMetricIdeaAsync(metric.Id, plannerTask, Constants.IdeasPlan.Buckets.NewIdea, plannerTaskUrl);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await context.SayAsync("Failed to add item to MetricIdea list: " + ex.Message);
             }
 
             await context.SayAsync("Idea created.");
-
-            //var viewAction = new CardAction(ActionTypes.OpenUrl, "View", value: plannerTaskUrl);
-            //var heroCard = new HeroCard(
-            //    text: "Idea created.",
-            //    buttons: new List<CardAction> { viewAction });
-
-            //var message = context.MakeMessage();
-            //message.Attachments.Add(heroCard.ToAttachment());
-            //await context.PostAsync(message);
-
             context.Done(idea);
         }
 
